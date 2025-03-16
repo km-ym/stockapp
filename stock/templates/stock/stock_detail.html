@@ -1,0 +1,73 @@
+{% load humanize %}
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ stock.name }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100">
+    <!-- 戻るボタン -->
+    <a href="{% url 'stock_list' %}" 
+       class="fixed top-4 right-4 bg-gray-500 text-white px-4 py-2 rounded shadow-lg hover:bg-gray-700">
+        戻る
+    </a>
+
+    <div class="container mx-auto mt-6">
+        <h1 class="text-3xl font-bold text-left mb-1">{{ stock.name }}</h1>
+        <div class="flex items-center gap-4">
+            <h1 class="text-5xl font-bold text-left mb-1">{{ stock.current_price|floatformat:2|intcomma }}</h1>
+            
+            <div class="border border-gray-400 py-.5 px-2 inline-flex items-center gap-2">
+                <h1 class="text-sm font-bold text-left mb-1">
+                    前日比
+                </h1>
+                <h1 class="text-lg font-bold text-left mb-1">
+                    {{ stock.price_change|floatformat:2|intcomma }}
+                </h1>
+            </div>
+        </div>
+
+        <table class="w-auto table-auto bg-white border border-gray-300 mt-6 text-sm">
+            <tbody>
+                <tr>
+                    <td class="px-4 py-2 border-b">前日終値</td>
+                    <td class="px-4 py-2 border-b">{{ stock.previous_close|floatformat:0|intcomma }}</td>
+                </tr>
+                <tr>
+                    <td class="px-4 py-2 border-b">始値</td>
+                    <td class="px-4 py-2 border-b">{{ open_price|floatformat:0|intcomma }}</td>
+                </tr>
+                <tr>
+                    <td class="px-4 py-2 border-b">高値</td>
+                    <td class="px-4 py-2 border-b">{{ high_price|floatformat:0|intcomma }}</td>
+                </tr>
+                <tr>
+                    <td class="px-4 py-2 border-b">安値</td>
+                    <td class="px-4 py-2 border-b">{{ low_price|floatformat:0|intcomma }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+         <!-- 株価チャートの表示 -->
+        {% if chart_image %}
+            <img src="data:image/png;base64,{{ chart_image }}" class="my-6"/>
+            <div class="flex items-center gap-2 mt-6">
+                <span class="text-yellow-500">■</span>
+                <p class="text-black text-sm">移動25日平均</p>
+                <span class="text-red-500">■</span>
+                <p class="text-black text-sm">移動50日平均</p>
+                <span class="text-green-500">■</span>
+                <p class="text-black text-sm">移動75日平均</p>
+                <p class="text-black text-lg">(日足チャート)</p>
+            </div>
+        {% else %}
+            <p class="my-6">チャートが利用できません。</p>
+        {% endif %}
+        
+    </div>
+</body>
+</html>

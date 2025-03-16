@@ -1,0 +1,95 @@
+{% load humanize %}
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock List</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+
+    <div class="container mx-auto mt-6">
+        <h1 class="text-3xl font-bold text-center mb-6">Stock List</h1>
+        
+        <!-- 検索フォーム -->
+        <form method="GET" action="" class="mb-6">
+            <div class="flex items-center gap-4">
+                <div class="flex items-center gap-2">
+                   <label for="id_query" class="whitespace-nowrap">銘柄名:</label>
+                    <div>
+                        {{ search_form.query }}
+                    </div>
+                </div>
+                <button type="submit" name="search" class="bg-blue-500 text-white py-1 px-2 rounded">
+                    検索
+                </button>
+                <a href="{% url 'stock_list' %}" class="bg-gray-500 text-white py-1 px-2 rounded">
+                    全表示
+                </a>
+            </div>
+        </form>
+
+
+        <!-- 新規登録フォーム -->
+        <form method="POST" action="" class="mb-6">
+            {% csrf_token %}
+            <div class="flex items-center gap-4">
+                <!-- Name フィールド -->
+                <div class="flex items-center gap-2">
+                    <label for="id_name" class="whitespace-nowrap">Name:</label>
+                    <div class="w-64">
+                        {{ create_form.name }}
+                    </div>
+                </div>
+
+                <!-- Ticker フィールド -->
+                <div class="flex items-center gap-2">
+                    <label for="id_ticker" class="whitespace-nowrap">Ticker:</label>
+                    <div class="w-64">
+                        {{ create_form.ticker }}
+                    </div>
+                </div>
+
+                <!-- 送信ボタン -->
+                <button type="submit" name="create" class="bg-green-500 text-white py-1 px-2 rounded">
+                    新規登録
+                </button>
+            </div>
+        </form>
+
+
+        <table class="min-w-full table-auto bg-white border border-gray-300">
+            <thead>
+                <tr>
+                    <th class="px-4 py-2 border-b text-left">銘柄</th>
+                    <th class="px-4 py-2 border-b text-left">現在の株価</th>
+                    <th class="px-4 py-2 border-b text-left">前日差</th>
+                    <th class="px-4 py-2 border-b text-left"></th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for stock in stocks %}
+                <tr>
+                    <td class="px-4 py-2 border-b">{{ stock.name }}({{ stock.ticker }})</td>
+                    <td class="px-4 py-2 border-b">{{ stock.current_price|floatformat:0|intcomma }}</td>
+                    <td class="px-4 py-2 border-b {% if stock.price_change > 0 %}text-green-500{% else %}text-red-500{% endif %}">
+                        {{ stock.price_change|floatformat:0|intcomma }}
+                    </td>
+                    <td class="px-4 py-2 border-b">
+                        <a href="{% url 'stock_detail' stock.id %}" 
+                           class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-700">
+                            詳細
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
+

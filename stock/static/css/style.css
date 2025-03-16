@@ -1,0 +1,24 @@
+.box {
+    max-width: 125px;  /* 最大幅 */
+    margin: 0 ;  /* 左寄せ */
+    border: 1px solid #2589d0;  /* 青色の枠線 */
+    border-radius: 3px;  /* 角を丸く */
+    overflow: hidden;  /* はみ出した要素を非表示 */
+    text-align: center; /* 中央揃え */
+}
+
+.box span {
+    display: block; /* ブロック要素にして横幅を親要素に合わせる */
+    padding: .1em .4em; /* 内側の余白を調整 */
+    background-color: #2589d0; /* 背景色（青） */
+    color: #fff; /* 文字色（白） */
+    font-weight: bold; /* 文字を太く */
+}
+
+.box p {
+    margin: 0; /* 余白をなくす */
+    padding: .1em .5em; /* 内側の余白を追加 */
+    color: #333; /* 文字色（濃いグレー） */
+    font-size: 1.2em; /* 文字サイズを大きく */
+    font-weight: bold; /* 文字を太く */
+}

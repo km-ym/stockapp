@@ -1,0 +1,19 @@
+# Python関連のファイル
+__pycache__/
+*.pyc
+*.pyo
+*.env
+
+# 仮想環境（venv）の除外
+venv/
+env/
+
+# データベースファイル
+db.sqlite3
+
+# Djangoの環境変数
+.env
+*.log
+
+# 静的ファイルのキャッシュ
+staticfiles/
