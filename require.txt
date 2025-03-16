@@ -1,0 +1,14 @@
+Django==4.2.16
+django-apscheduler==0.7.0
+django-celery-beat==2.7.0
+apscheduler==3.11.0
+python-crontab==3.2.0
+pytz==2024.2
+celery==5.4.0
+kombu==5.4.2
+vine==5.1.0
+sqlparse==0.5.2
+yfinance==0.2.37
+pandas==2.2.3
+numpy==2.0.2
+requests==2.32.3
