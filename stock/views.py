@@ -17,7 +17,14 @@ from .forms import StockSearchForm, StockCreateForm
 logger = logging.getLogger(__name__)  
 
 class TopView(TemplateView):
-    template_name = "stock/top.html"
+    template_name = "stock/stock_list.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['stocks'] = Stock.objects.all() 
+        context['search_form'] = StockSearchForm()
+        context['create_form'] = StockCreateForm()
+        return context
 
 # 株一覧ページ
 def stock_list(request):
@@ -37,7 +44,7 @@ def stock_list(request):
         create_form = StockCreateForm(request.POST)
         if create_form.is_valid():
             create_form.save()
-            return redirect('stock_list')
+            return redirect('top')
 
     return render(request, 'stock/stock_list.html', {
         'stocks': stocks,

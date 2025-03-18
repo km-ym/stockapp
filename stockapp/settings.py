@@ -20,6 +20,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: don't run with debug turned on in production!
+from decouple import config
+
+SECRET_KEY = config('SECRET_KEY')
+
 DEBUG = True
 
 ALLOWED_HOSTS = []
